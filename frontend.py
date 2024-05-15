@@ -17,7 +17,7 @@ if uploaded_file is not None:
         img_byte_arr.seek(0)
         
         files = {'file': img_byte_arr}
-        response = requests.post("http://<your-render-backend-url>/convert", files=files)
+        response = requests.post("https://bc-image-2.onrender.com/convert", files=files)
         
         if response.status_code == 200:
             bw_img = Image.open(io.BytesIO(response.content))
