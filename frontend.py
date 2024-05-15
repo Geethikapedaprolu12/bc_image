@@ -17,4 +17,11 @@ if uploaded_file is not None:
         img_byte_arr.seek(0)
         
         files = {'file': img_byte_arr}
-        response = requests.post("http://<your-render-backend-url>/convert
+        response = requests.post("http://<your-render-backend-url>/convert", files=files)
+        
+        if response.status_code == 200:
+            bw_img = Image.open(io.BytesIO(response.content))
+            st.image(bw_img, caption='Black and White Image.', use_column_width=True)
+            btn = st.download_button(label="Download Image", data=response.content, file_name='bw_image.png', mime='image/png')
+        else:
+            st.error(response.json().get('error'))
